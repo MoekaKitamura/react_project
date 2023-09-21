@@ -1,0 +1,18 @@
+services:
+  app:
+    container_name: react-study
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./
+        target: /workspace/app/
+    working_dir: "/workspace/app"
+    environment:
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+    command: /bin/bash
