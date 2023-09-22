@@ -4,7 +4,7 @@ git remote set-url origin <remote repository url>
 ```
 
 ## ex1. （Windowsの場合）Make for Windowsのインストール
-https://zenn.dev/genki86web/articles/6e61c167fbe926　<br>
+https://zenn.dev/genki86web/articles/6e61c167fbe926<br>
 システム環境変数のPathに `インストール先/bin` を登録する
 
 ## 2. Makeコマンドを使ったコンテナの起動
