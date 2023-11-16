@@ -1,4 +1,4 @@
-import Child from "./components/Child";
+import Child from "./components/Child.js";
 
 const Example = () => <Child />;
 

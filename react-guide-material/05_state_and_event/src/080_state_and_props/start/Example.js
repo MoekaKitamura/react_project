@@ -2,20 +2,23 @@ import { useState } from "react";
 
 const Example = () => {
   const [ toggle, setToggle ] = useState(true);
+  const [ countA, setCountA ] = useState(0);
+  const [ countB, setCountB ] = useState(0);
   const toggleComponent = () => {
     setToggle(prev => !prev);
   }
   return (
     <>
-    <button onClick={toggleComponent}>toggle</button>
-    {toggle ? <Count key="A" title="A"/> : <Count key="B" title="B"/>}
+      <button onClick={toggleComponent}>toggle</button>
+      {toggle ? <Count key="A" title="A" count={countA} setCount={setCountA} /> : <Count key="B" title="B" count={countB} setCount={setCountB} />}
+      {/* <Count key="A" title="A" count={countA} setCount={setCountA} /> */}
+      {/* <Count key="B" title="B" count={countB} setCount={setCountB} /> */}
     </>
   )
 }
-const Count = ({ title }) => {
-  const [count, setCount] = useState(0);
+const Count = ({ title, count, setCount }) => {
   const countUp = () => {
-    setCount((prevstate) => prevstate + 1);
+    setCount((prevState) => prevState + 1);
   };
   const countDown = () => {
     setCount(count - 1);
