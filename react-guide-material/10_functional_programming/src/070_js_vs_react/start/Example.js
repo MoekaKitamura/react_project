@@ -17,7 +17,7 @@ const Example = () => {
   const $ = {};
 
   const init = () => {
-    $.app = window.document.querySelector("#todo-js-app");
+    $.app = document.querySelector("#todo-js-app");
     $.list = $.app.querySelector(".todo-list");
     $.input = $.app.querySelector(".todo-input");
     $.addBtn = $.app.querySelector(".todo-add-btn");

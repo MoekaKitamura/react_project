@@ -1,4 +1,15 @@
 const Example = () => {
+  const num = { val: 2 }
+
+  const double = (num) => {
+    num.val *= 2
+    return num
+  }
+
+  const newNum = double(num)
+
+  console.log(newNum)
+
   return (
     <>
       <h3>不変性（Immutability）</h3>
