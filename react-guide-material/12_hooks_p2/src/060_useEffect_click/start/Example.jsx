@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import Ramdom from "./Random";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 const Example = () => {
   const [isDisp, setIsDisp] = useState(true);
@@ -7,26 +6,30 @@ const Example = () => {
   return (
     <>
       {isDisp && <Timer />}
-      <button onClick={() => setIsDisp((prev) => !prev)}>トグル</button>
+      <button onClick={() => setIsDisp((prev) => !prev)}>{isDisp ? "非表示" : "表示"}</button>
     </>
   );
 };
 
 const Timer = () => {
   const [time, setTime] = useState(0);
+  const [isRunning, setIsRunnning] = useState(false);
 
   useEffect(() => {
     // console.log('init');
     let intervalId = null;
-    intervalId = window.setInterval(() => {
-      // console.log("interval called");
-      setTime((prev) => prev + 1);
-    }, 1000);
+
+    if(isRunning) {
+      intervalId = window.setInterval(() => {
+        // console.log('interval running');
+        setTime((prev) => prev + 1);
+      }, 1000);
+    }
     return () => {
       window.clearInterval(intervalId);
       // console.log('end');
     };
-  }, []);
+  }, [isRunning]);
 
   useEffect(() => {
     // console.log('updated');
@@ -35,17 +38,25 @@ const Timer = () => {
     window.localStorage.setItem("time-key", time);
 
     return () => {
+      // debugger
       // console.log('updated end');
     };
   }, [time]);
 
   useLayoutEffect(() => {
     const _time = parseInt(window.localStorage.getItem("time-key"));
-    console.log(_time);
     if (!isNaN(_time)) {
       setTime(_time);
     }
   }, []);
+
+  const onClickToggle = () => {
+    setIsRunnning(prev => !prev)
+  }
+  const onClickReset = () => {
+    setIsRunnning(false)
+    setTime(0)
+  }
 
   return (
     <>
@@ -53,7 +64,9 @@ const Timer = () => {
         <time>{time}</time>
         <span>秒経過</span>
       </h3>
-      <Ramdom />
+
+      <button onClick={onClickToggle}>{isRunning ? "ストップ" : "スタート"}</button>
+      <button onClick={onClickReset}>リセット</button>
     </>
   );
 };
