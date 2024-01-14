@@ -1,3 +1,4 @@
+import { useTransition } from "react";
 import { useState } from "react";
 
 const generateDummyItem = (num) => {
@@ -7,25 +8,32 @@ const generateDummyItem = (num) => {
 const dummyItems = generateDummyItem(10000);
 
 const Example = () => {
+  const [isPending, startTransition] = useTransition();
   const [filterVal, setFilterVal] = useState("");
 
   const changeHandler = (e) => {
-    setFilterVal(e.target.value);
+    startTransition(() => {
+      setFilterVal(e.target.value);
+    });
   };
 
   return (
     <>
       <input type="text" onChange={changeHandler} />
-      <ul>
-        {dummyItems
-          .filter((item) => {
-            if (filterVal === "") return true;
-            return item.includes(filterVal);
-          })
-          .map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-      </ul>
+      {isPending ? (
+        <h1>ローディング!!!!</h1>
+      ) : (
+        <ul>
+          {dummyItems
+            .filter((item) => {
+              if (filterVal === "") return true;
+              return item.includes(filterVal);
+            })
+            .map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+        </ul>
+      )}
     </>
   );
 };

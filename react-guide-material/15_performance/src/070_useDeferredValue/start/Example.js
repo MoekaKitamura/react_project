@@ -1,3 +1,4 @@
+import { useDeferredValue } from "react";
 import { useState, useTransition } from "react";
 
 const generateDummyItem = (num) => {
@@ -11,24 +12,29 @@ const Example = () => {
   const [filterVal, setFilterVal] = useState("");
 
   const changeHandler = (e) => {
-    startTransition(() => {
-      setFilterVal(e.target.value);
-    })
+    // startTransition(() => {
+    //   setFilterVal(e.target.value);
+    // })
+    setFilterVal(e.target.value);
   };
+
+  const filteredItems = dummyItems
+  .filter((item) => {
+    if (filterVal === "") return true;
+    return item.includes(filterVal);
+  })
+  .map((item) => (
+    <li key={item}>{item}</li>
+  ))
+
+  const defferredItems = useDeferredValue(filteredItems)
 
   return (
     <>
       <input type="text" onChange={changeHandler} />
-      {isPending && <div>Loading...</div>}
+      {/* {isPending && <div>Loading...</div>} */}
       <ul>
-        {dummyItems
-          .filter((item) => {
-            if (filterVal === "") return true;
-            return item.includes(filterVal);
-          })
-          .map((item) => (
-            <li key={item}>{item}</li>
-          ))}
+        {defferredItems}
       </ul>
     </>
   );
